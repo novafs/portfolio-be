@@ -1,0 +1,4 @@
+All imageUrl null when there is no new upload on All update (or implement on frontend)
+[Need Check] Use new Date for createdAt and updatedAt fields instead of database default (Check All controllers)
+Fix all res (Check All controllers)
+[V] Bug found. Get By Id return success even though the data is not found (Check All controllers)
