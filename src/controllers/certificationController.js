@@ -52,7 +52,8 @@ export const getAllCertifications = async (req, res) => {
 
 export const getDetailCertification = async (req, res) => {
   try {
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const result = await select(id);
     if (result.rows.length === 0) {
       return commonHelper.response(res, null, 404, "Certification not found");
@@ -89,14 +90,15 @@ export const insertCertification = async (req, res) => {
       });
     }
 
-    const certificationTypeCheck = await selectCertificationType(certificationTypeId);
+    const certificationTypeCheck =
+      await selectCertificationType(certificationTypeId);
     if (certificationTypeCheck.rowCount === 0) {
       return res.status(404).json({
         message: "Certification Type ID not found",
       });
     }
 
-    const user = req.user;
+    // const user = req.user;
     const uploadStream = () =>
       new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
@@ -130,7 +132,7 @@ export const insertCertification = async (req, res) => {
       featured,
       certificationDate,
       credentialLink,
-      createdAt
+      createdAt,
     };
     const insertResult = await insert(data);
 
@@ -153,12 +155,13 @@ export const insertCertification = async (req, res) => {
 
 export const updateCertification = async (req, res) => {
   try {
-    const user = req.user;
+    // const user = req.user;
     // if (user.role !== "admin") {
     //   return res.status(403).json({ message: "Access denied" });
     // }
 
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const certification = await select(id);
     const updatedAt = new Date();
 
@@ -183,7 +186,8 @@ export const updateCertification = async (req, res) => {
       });
     }
 
-    const certificationTypeCheck = await selectCertificationType(certificationTypeId);
+    const certificationTypeCheck =
+      await selectCertificationType(certificationTypeId);
     if (certificationTypeCheck.rowCount === 0) {
       return res.status(404).json({
         message: "Certification Type ID not found",
@@ -222,7 +226,7 @@ export const updateCertification = async (req, res) => {
       featured,
       certificationDate,
       credentialLink,
-      updatedAt
+      updatedAt,
     };
 
     const result = await update(data);
@@ -240,11 +244,12 @@ export const updateCertification = async (req, res) => {
 
 export const deleteCertification = async (req, res) => {
   try {
-    const user = req.user;
+    // const user = req.user;
     //if (user.role !== "admin") {
     //  return res.status(403).json({ message: "Access denied" });
     //}
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const result = await deleteData(id);
     commonHelper.response(res, result.rows, 200, "Certification deleted");
   } catch (error) {

@@ -1,6 +1,3 @@
--- Aktifkan ekstensi untuk UUID
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 CREATE TABLE users (
     username VARCHAR(15) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
@@ -92,3 +89,5 @@ CREATE TABLE project_techs (
     techId INT REFERENCES Techs(id) ON DELETE CASCADE,
     PRIMARY KEY (projectId, techId)
 );
+
+INSERT INTO users (username, password) VALUES ('novafajri', '$2b$15$JWE0VpuHCR3dCj00dUoRze03gI.ALNUxgC6DWa9i7OYud2FTDK9Bq');

@@ -7,15 +7,15 @@ import {
   deleteData,
   getProjectTech,
   insertProjectTech,
-  deleteProjectTech
+  deleteProjectTech,
 } from "../models/projectModel.js";
 import {
-    selectAll as selectAllCategories,
-    select as selectCategory,
+  selectAll as selectAllCategories,
+  select as selectCategory,
 } from "../models/categoryModel.js";
 import {
-    selectAll as selectAllTechs,
-    select as selectTech
+  selectAll as selectAllTechs,
+  select as selectTech,
 } from "../models/techModel.js";
 import commonHelper from "../helper/common.js";
 import cloudinary from "../config/cloudinary.js";
@@ -55,13 +55,19 @@ export const getAllProjects = async (req, res) => {
 
 export const getDetailProject = async (req, res) => {
   try {
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const result = await select(id);
     const techResult = await getProjectTech(id);
     if (result.rows.length === 0) {
       return commonHelper.response(res, null, 404, "Project not found");
     }
-    commonHelper.response(res, { ...result.rows[0], techIds: techResult.rows.map(row => row.techid) }, 200, "Get Project By Id Success");
+    commonHelper.response(
+      res,
+      { ...result.rows[0], techIds: techResult.rows.map((row) => row.techid) },
+      200,
+      "Get Project By Id Success",
+    );
   } catch (error) {
     res.send(error);
   }
@@ -136,7 +142,7 @@ export const insertProject = async (req, res) => {
       featured,
       publishDate,
       projectLinks,
-      createdAt
+      createdAt,
     };
     const insertResult = await insert(data);
 
@@ -167,7 +173,8 @@ export const updateProject = async (req, res) => {
     // if (user.role !== "admin") {
     //   return res.status(403).json({ message: "Access denied" });
     // }
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const project = await select(id);
 
     const {
@@ -240,7 +247,7 @@ export const updateProject = async (req, res) => {
       featured,
       publishDate,
       projectLink,
-      updatedAt
+      updatedAt,
     };
 
     await deleteProjectTech(id);
@@ -266,7 +273,8 @@ export const deleteProject = async (req, res) => {
     //if (user.role !== "admin") {
     //  return res.status(403).json({ message: "Access denied" });
     //}
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const result = await deleteData(id);
     await deleteProjectTech(id);
     commonHelper.response(res, result.rows, 200, "Project deleted");

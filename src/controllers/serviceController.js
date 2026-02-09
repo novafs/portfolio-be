@@ -46,15 +46,11 @@ export const getAllServices = async (req, res) => {
 
 export const getDetailService = async (req, res) => {
   try {
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const result = await select(id);
     if (result.rows.length === 0) {
-      return commonHelper.response(
-        res,
-        null,
-        404,
-        "Service not found",
-      );
+      return commonHelper.response(res, null, 404, "Service not found");
     }
     commonHelper.response(
       res,
@@ -69,11 +65,7 @@ export const getDetailService = async (req, res) => {
 
 export const insertService = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      categoryId
-    } = req.body;
+    const { title, description, categoryId } = req.body;
 
     // 1. Validasi Category ID (Menggunakan model category)
     const categoryCheck = await selectCategory(categoryId);
@@ -97,7 +89,7 @@ export const insertService = async (req, res) => {
       title,
       description,
       categoryId,
-      createdAt
+      createdAt,
     };
     const insertResult = await insert(data);
 
@@ -124,14 +116,11 @@ export const updateService = async (req, res) => {
     //   return res.status(403).json({ message: "Access denied" });
     // }
 
-    const id = Number(req.params.id);
+    const { id } = req.params;
+
     const updatedAt = new Date();
 
-    const {
-      title,
-      description,
-      categoryId,
-    } = req.body;
+    const { title, description, categoryId } = req.body;
 
     // 1. Validasi Category ID (Menggunakan model category)
     const categoryCheck = await selectCategory(categoryId);
@@ -146,7 +135,7 @@ export const updateService = async (req, res) => {
       title,
       description,
       categoryId,
-      updatedAt
+      updatedAt,
     };
 
     const result = await update(data);
@@ -167,7 +156,7 @@ export const deleteService = async (req, res) => {
     //if (user.role !== "admin") {
     //  return res.status(403).json({ message: "Access denied" });
     //}
-    const id = Number(req.params.id);
+    const { id } = req.params;
     const result = await deleteData(id);
     commonHelper.response(res, result.rows, 200, "Service deleted");
   } catch (error) {
