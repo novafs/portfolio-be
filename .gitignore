@@ -1,3 +1,4 @@
+node_modules/
 .env
-node_modules
+>>>>>>> 881c36e (Update for project's techIds return at getProjectById)
 .log
