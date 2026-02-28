@@ -59,12 +59,13 @@ export const getDetailProject = async (req, res) => {
 
     const result = await select(id);
     const techResult = await getProjectTech(id);
+    const techIds = techResult.rows.map((row) => row.techid);
     if (result.rows.length === 0) {
       return commonHelper.response(res, null, 404, "Project not found");
     }
     commonHelper.response(
       res,
-      { ...result.rows[0], techIds: techResult.rows.map((row) => row.techid) },
+      { ...result.rows[0], techIds },
       200,
       "Get Project By Id Success",
     );

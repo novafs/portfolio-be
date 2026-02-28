@@ -8,7 +8,7 @@ const pool = new Pool({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
+  password: process.env.PGPASSWORD, 
   port: process.env.DB_PORT,
   // connectionString: process.env.DATABASE_URL,
   connectionTimeoutMillis: 10000, 
@@ -19,6 +19,14 @@ const pool = new Pool({
     rejectUnauthorized: false, 
   },
 });
+
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASS, 
+//   port: process.env.DB_PORT,
+// });
 
 pool.connect()
   .then(() => console.log('Connected to Postgres'))
