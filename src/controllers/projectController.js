@@ -232,7 +232,7 @@ export const updateProject = async (req, res) => {
       thumbnailUrl = result.secure_url;
     } else {
       // If no new photo, keep the existing one or use a placeholder
-      thumbnailUrl = project.thumbnailurl;
+      thumbnailUrl = project.rows[0].thumbnailurl;
     }
 
     const updatedAt = new Date();
