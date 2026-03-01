@@ -214,6 +214,16 @@ export const updateProject = async (req, res) => {
       }
     }
 
+    let finalProjectLinks;
+    try {
+      finalProjectLinks = JSON.parse(projectLinks || "[]");
+    } catch (e) {
+      // Fallback if it's already an array or a single string
+      finalProjectLinks = Array.isArray(projectLinks)
+        ? projectLinks
+        : [projectLinks];
+    }
+
     // Check if there's a file upload for photo update
     if (req.file) {
       // const result = await uploadFile(req.file, `projects/${id}`);
@@ -247,7 +257,7 @@ export const updateProject = async (req, res) => {
       techId,
       featured,
       publishDate,
-      projectLinks,
+      projectLinks: finalProjectLinks,
       updatedAt,
     };
 
