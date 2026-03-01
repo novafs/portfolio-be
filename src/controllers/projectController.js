@@ -214,14 +214,22 @@ export const updateProject = async (req, res) => {
       }
     }
 
-    let finalProjectLinks;
+    let finalProjectLinks = [];
     try {
-      finalProjectLinks = JSON.parse(projectLinks || "[]");
+      // Try to parse the string sent by JSON.stringify
+      finalProjectLinks =
+        typeof projectLinks === "string"
+          ? JSON.parse(projectLinks)
+          : projectLinks;
     } catch (e) {
-      // Fallback if it's already an array or a single string
-      finalProjectLinks = Array.isArray(projectLinks)
-        ? projectLinks
-        : [projectLinks];
+      // If parsing fails (it's a raw string) or it's just one link not stringified
+      if (projectLinks) {
+        finalProjectLinks = Array.isArray(projectLinks)
+          ? projectLinks
+          : [projectLinks];
+      } else {
+        finalProjectLinks = [];
+      }
     }
 
     // Check if there's a file upload for photo update
