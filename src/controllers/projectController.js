@@ -186,7 +186,7 @@ export const updateProject = async (req, res) => {
       techId,
       featured,
       publishDate,
-      projectLink,
+      projectLinks,
     } = req.body;
 
     let thumbnailUrl;
@@ -247,7 +247,7 @@ export const updateProject = async (req, res) => {
       techId,
       featured,
       publishDate,
-      projectLink,
+      projectLinks,
       updatedAt,
     };
 
