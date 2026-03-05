@@ -185,8 +185,7 @@ export const updateProject = async (req, res) => {
       categoryId,
       techId,
       featured,
-      publishDate,
-      projectLinks,
+      publishDate
     } = req.body;
 
     let thumbnailUrl;
@@ -214,25 +213,7 @@ export const updateProject = async (req, res) => {
       }
     }
 
-    let finalProjectLinks = [];
-
-    if (projectLinks) {
-      try {
-        // If it's a string from JSON.stringify, turn it back into an array
-        finalProjectLinks =
-          typeof projectLinks === "string"
-            ? JSON.parse(projectLinks)
-            : projectLinks;
-      } catch (e) {
-        // If it's not JSON (just a raw string), wrap it in an array
-        finalProjectLinks = [projectLinks];
-      }
-    }
-
-    // Ensure it is a clean array of strings
-    finalProjectLinks = Array.isArray(finalProjectLinks)
-      ? finalProjectLinks
-      : [];
+    const projectLinks = JSON.parse(req.body.projectLinks || "[]");
 
     // Check if there's a file upload for photo update
     if (req.file) {
@@ -267,7 +248,7 @@ export const updateProject = async (req, res) => {
       techId,
       featured,
       publishDate,
-      projectLinks: finalProjectLinks,
+      projectLinks,
       updatedAt,
     };
 
