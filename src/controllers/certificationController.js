@@ -212,7 +212,7 @@ export const updateCertification = async (req, res) => {
       imageUrl = result.secure_url;
     } else {
       // If no new photo, keep the existing one or use a placeholder
-      imageUrl = certification.rows[0].imageUrl;
+      imageUrl = certification.rows[0].imageurl;
     }
 
     const data = {
