@@ -82,8 +82,7 @@ export const insertProject = async (req, res) => {
       description,
       categoryId,
       featured,
-      publishDate,
-      projectLinks,
+      publishDate
     } = req.body;
 
     // Parsing techIds karena biasanya dikirim dalam bentuk string array dari FormData
@@ -108,6 +107,8 @@ export const insertProject = async (req, res) => {
         }
       }
     }
+
+    const projectLinks = JSON.parse(req.body.projectLinks || "[]");
 
     const uploadStream = () =>
       new Promise((resolve, reject) => {
